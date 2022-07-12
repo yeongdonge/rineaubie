@@ -28,7 +28,7 @@ public class PostController {
         // -> javascript + <-> API (JSON)
 
     @PostMapping("/posts")
-    public Map<String, String> post(@RequestBody @Valid PostCreate params, BindingResult result) {
+    public Map<String, String> post(@RequestBody @Valid PostCreate params) {
         // 데이터를 검증하는 이유
 
         // 1. client 개발자가 깜빡할 수 있다. 실수로 값을 안보낼 수 있다.
@@ -40,17 +40,17 @@ public class PostController {
         String title = params.getTitle();
         String content = params.getContent();
         log.info("params={}", params.toString());
-        if (result.hasErrors()) {
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            FieldError firstFieldError = fieldErrors.get(0);
-            String fieldName = firstFieldError.getField(); // title
-            String errorMessage = firstFieldError.getDefaultMessage();// 에러 메시지
-
-            Map<String, String> error = new HashMap<>();
-            error.put(fieldName, errorMessage);
-            return error;
-        }
-        // {"title": "타이틀 값이 없습니다."}
+//        if (result.hasErrors()) {
+//            List<FieldError> fieldErrors = result.getFieldErrors();
+//            FieldError firstFieldError = fieldErrors.get(0);
+//            String fieldName = firstFieldError.getField(); // title
+//            String errorMessage = firstFieldError.getDefaultMessage();// 에러 메시지
+//
+//            Map<String, String> error = new HashMap<>();
+//            error.put(fieldName, errorMessage);
+//            return error;
+//        }
+//        // {"title": "타이틀 값이 없습니다."}
         return Map.of();
     }
 }
