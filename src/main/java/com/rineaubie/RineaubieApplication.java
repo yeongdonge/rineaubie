@@ -9,5 +9,4 @@ public class RineaubieApplication {
     public static void main(String[] args) {
         SpringApplication.run(RineaubieApplication.class, args);
     }
-
 }
