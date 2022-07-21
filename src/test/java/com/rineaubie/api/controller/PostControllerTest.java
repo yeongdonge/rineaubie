@@ -1,7 +1,9 @@
 package com.rineaubie.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
+import com.rineaubie.api.request.PostCreate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,17 +19,20 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
-//@WebMvcTest
 @SpringBootTest
 class PostControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private PostRepository postRepository;
@@ -59,25 +64,47 @@ class PostControllerTest {
          * }
          */
 
+        //given
+        PostCreate request = PostCreate.builder()
+                .title("제목입니다.")
+                .content("내용입니다.")
+                .build();
+
+        //  빌더의 장점
+        //  - 가독성
+        //  - 값 생성에 대한 유연함
+        //  - 필요한 값만 받을 수 있다.
+        //  - 객체의 불변성
+
+        String json = objectMapper.writeValueAsString(request);
+
+        System.out.println("json = " + json);
+
         // expected
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"제목입니다.\", \"content\": \"내용입니다.\"}")
+                        .contentType(APPLICATION_JSON)
+                        .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(content().string("{}"))
+                .andExpect(content().string(""))
                 .andDo(print());
     }
     @Test
     @DisplayName("/posts 요청시 title 값은 필수다.")
     void test2() throws Exception {
 
+        //given
+        PostCreate request = PostCreate.builder()
+                .content("내용입니다.")
+                .build();
+
+        String json = objectMapper.writeValueAsString(request);
         // expected
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 // {"title": ""} -> OK
                 // {"title": null} -> OK
-                        .content("{\"title\": null, \"content\": \"내용입니다.\"}")
+                        .content(json)
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("400"))
@@ -89,12 +116,20 @@ class PostControllerTest {
     @DisplayName("/posts 요청시 DB에 값이 저장된다.")
     void test3() throws Exception {
 
+        //given
+        PostCreate request = PostCreate.builder()
+                .title("제목입니다.")
+                .content("내용입니다.")
+                .build();
+
+        String json = objectMapper.writeValueAsString(request);
+
         // when
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                 // {"title": ""} -> OK
                 // {"title": null} -> OK
-                        .content("{\"title\": \"제목입니다.\", \"content\": \"내용입니다.\"}")
+                        .content(json)
                 )
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -103,7 +138,7 @@ class PostControllerTest {
         Assertions.assertEquals(1L, postRepository.count());
 
         Post post = postRepository.findAll().get(0);
-        assertEquals("제목입니다", post.getTitle());
+        assertEquals("제목입니다.", post.getTitle());
         assertEquals("내용입니다.", post.getContent());
     }
 }

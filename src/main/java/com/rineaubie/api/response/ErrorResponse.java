@@ -1,6 +1,7 @@
 package com.rineaubie.api.response;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +18,6 @@ import java.util.Map;
  * }
  */
 
-@RequiredArgsConstructor
 @Getter
 public class ErrorResponse {
 
@@ -25,6 +25,12 @@ public class ErrorResponse {
     private final String message;
 
     private final Map<String, String> validation = new HashMap<>();
+
+    @Builder
+    public ErrorResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
     public void addValidation(String field, String message) {
         validation.put(field, message);
