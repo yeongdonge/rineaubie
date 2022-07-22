@@ -1,17 +1,13 @@
 package com.rineaubie.api.controller;
 
+import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -35,5 +31,16 @@ public class PostController {
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
         postService.write(request);
+    }
+
+    /**
+     * /posts -> 글 전체 조회(검색 + 페이징)
+     * /posts/{postId} -> 글 단건 조회
+     */
+
+    @GetMapping("/posts/{postId}")
+    public Post get(@PathVariable(name = "postId") Long id) {
+        Post post = postService.get(id);
+        return post;
     }
 }

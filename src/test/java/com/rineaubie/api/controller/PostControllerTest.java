@@ -1,5 +1,6 @@
 package com.rineaubie.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
@@ -14,10 +15,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -140,5 +143,45 @@ class PostControllerTest {
         Post post = postRepository.findAll().get(0);
         assertEquals("제목입니다.", post.getTitle());
         assertEquals("내용입니다.", post.getContent());
+    }
+
+    @Test
+    @DisplayName("equals 테스트 - 재정의 하지 않음")
+    void testEquals() throws Exception {
+        // given
+        Post post = new Post("제목입니다.", "내용입니다.");
+        String json = objectMapper.writeValueAsString(post);
+
+        //when
+        mockMvc.perform(post("/posts")
+                .contentType(APPLICATION_JSON)
+                .content(json)
+        )
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        //then
+        Post findPost = postRepository.findAll().get(0);
+        assertThat(post).isEqualTo(findPost);
+    }
+
+    @Test
+    @DisplayName("글 1개 조회")
+    void test4() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("foo")
+                .content("bar")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        mockMvc.perform(get("/posts/{postId}", post.getId())
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(post.getId()))
+                .andExpect(jsonPath("$.title").value("foo"))
+                .andExpect(jsonPath("$.content").value("bar"))
+                .andDo(print());
     }
 }
