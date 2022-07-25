@@ -1,6 +1,5 @@
 package com.rineaubie.api.service;
 
-import com.rineaubie.api.controller.PostController;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
@@ -12,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class PostServiceTest {
@@ -59,7 +60,7 @@ class PostServiceTest {
         postRepository.save(post);
 
         // 클라이언트 요구사항
-            // json 응답에서 title 값 길이를 최대 10글자로 해달라
+        // json 응답에서 title 값 길이를 최대 10글자로 해달라
 
 
         // when
@@ -70,7 +71,38 @@ class PostServiceTest {
         assertEquals(1L, postRepository.count());
         assertEquals("foo", response.getTitle());
         assertEquals("bar", response.getContent());
-
     }
+
+    @Test
+    @DisplayName("글 여러개 조회")
+    void test3() {
+        //given
+        postRepository.saveAll(List.of(
+                Post.builder()
+                        .title("foo")
+                        .content("bar")
+                        .build(),
+                Post.builder()
+                        .title("foo1")
+                        .content("bar1")
+                        .build(),
+                Post.builder()
+                        .title("foo2")
+                        .content("bar2")
+                        .build()
+        ));
+
+
+        // 클라이언트 요구사항
+        // json 응답에서 title 값 길이를 최대 10글자로 해달라
+
+
+        // when
+        List<PostResponse> posts = postService.getList();
+
+        // then
+        assertEquals(3L, posts.size());
+    }
+
 
 }

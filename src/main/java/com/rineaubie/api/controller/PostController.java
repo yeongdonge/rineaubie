@@ -1,6 +1,5 @@
 package com.rineaubie.api.controller;
 
-import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.response.PostResponse;
 import com.rineaubie.api.service.PostService;
@@ -9,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -39,12 +39,23 @@ public class PostController {
      * /posts/{postId} -> 글 단건 조회
      */
 
+
+    // 조회 API
+    // 단건 조회 API (1개의 Post를 가져오는 기능)
+
     @GetMapping("/posts/{postId}")
-    public PostResponse get(@PathVariable(name = "postId") Long id) {
+    public PostResponse get(@PathVariable Long postId) {
         // Request 클래스
         // Response 클래스
+        return postService.get(postId);
+    }
 
-        PostResponse response = postService.get(id);
-        return response;
+    // 조회 API
+    // 여러개 조회 API
+    // /posts
+
+    @GetMapping("/posts")
+    public List<PostResponse> getList() {
+        return postService.getList();
     }
 }
