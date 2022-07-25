@@ -10,8 +10,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -74,23 +79,16 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("글 여러개 조회")
+    @DisplayName("글 1페이지 조회")
     void test3() {
         //given
-        postRepository.saveAll(List.of(
-                Post.builder()
-                        .title("foo")
-                        .content("bar")
-                        .build(),
-                Post.builder()
-                        .title("foo1")
-                        .content("bar1")
-                        .build(),
-                Post.builder()
-                        .title("foo2")
-                        .content("bar2")
-                        .build()
-        ));
+        List<Post> requestPosts = IntStream.range(1, 31)
+                .mapToObj(i -> Post.builder()
+                        .title("동영 제목 - " + i)
+                        .content("네카라쿠배 - " + i)
+                        .build())
+                .collect(Collectors.toList());
+        postRepository.saveAll(requestPosts);
 
 
         // 클라이언트 요구사항
@@ -98,10 +96,13 @@ class PostServiceTest {
 
 
         // when
-        List<PostResponse> posts = postService.getList();
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id"));
+        List<PostResponse> posts = postService.getList(pageable);
 
         // then
-        assertEquals(3L, posts.size());
+        assertEquals(5L, posts.size());
+        assertEquals("동영 제목 - 30", posts.get(0).getTitle());
+        assertEquals("동영 제목 - 26", posts.get(4).getTitle());
     }
 
 
