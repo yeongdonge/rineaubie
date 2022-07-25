@@ -4,6 +4,7 @@ import com.rineaubie.api.controller.PostController;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
+import com.rineaubie.api.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,14 +58,18 @@ class PostServiceTest {
 
         postRepository.save(post);
 
+        // 클라이언트 요구사항
+            // json 응답에서 title 값 길이를 최대 10글자로 해달라
+
+
         // when
-        Post findPost = postService.get(post.getId());
+        PostResponse response = postService.get(post.getId());
 
         // then
         Assertions.assertNotNull(post);
         assertEquals(1L, postRepository.count());
-        assertEquals("foo", findPost.getTitle());
-        assertEquals("bar", findPost.getContent());
+        assertEquals("foo", response.getTitle());
+        assertEquals("bar", response.getContent());
 
     }
 

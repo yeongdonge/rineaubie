@@ -145,32 +145,32 @@ class PostControllerTest {
         assertEquals("내용입니다.", post.getContent());
     }
 
-    @Test
-    @DisplayName("equals 테스트 - 재정의 하지 않음")
-    void testEquals() throws Exception {
-        // given
-        Post post = new Post("제목입니다.", "내용입니다.");
-        String json = objectMapper.writeValueAsString(post);
-
-        //when
-        mockMvc.perform(post("/posts")
-                .contentType(APPLICATION_JSON)
-                .content(json)
-        )
-                .andExpect(status().isOk())
-                .andDo(print());
-
-        //then
-        Post findPost = postRepository.findAll().get(0);
-        assertThat(post).isEqualTo(findPost);
-    }
+//    @Test
+//    @DisplayName("equals 테스트 - 재정의 하지 않음")
+//    void testEquals() throws Exception {
+//        // given
+//        Post post = new Post("제목입니다.", "내용입니다.");
+//        String json = objectMapper.writeValueAsString(post);
+//
+//        //when
+//        mockMvc.perform(post("/posts")
+//                .contentType(APPLICATION_JSON)
+//                .content(json)
+//        )
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//
+//        //then
+//        Post findPost = postRepository.findAll().get(0);
+//        assertThat(post).isEqualTo(findPost);
+//    }
 
     @Test
     @DisplayName("글 1개 조회")
     void test4() throws Exception {
         // given
         Post post = Post.builder()
-                .title("foo")
+                .title("123456789012345")
                 .content("bar")
                 .build();
         postRepository.save(post);
@@ -180,7 +180,7 @@ class PostControllerTest {
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(post.getId()))
-                .andExpect(jsonPath("$.title").value("foo"))
+                .andExpect(jsonPath("$.title").value("1234567890"))
                 .andExpect(jsonPath("$.content").value("bar"))
                 .andDo(print());
     }
