@@ -25,11 +25,11 @@ public class PostController {
     // POST Method
 
     // SSR -> jsp, thymeleaf, mustache,
-        // -> html rendering
+    // -> html rendering
     // SPA
     // vue, nuxt
     // react, next
-        // -> javascript + <-> API (JSON)
+    // -> javascript + <-> API (JSON)
 
     // 글 등록, 글 단건 조회, 글 리스트 조회
     // CRUD -> Create, Read, Update, Delete
@@ -47,7 +47,6 @@ public class PostController {
 
     // 조회 API
     // 단건 조회 API (1개의 Post를 가져오는 기능)
-
     @GetMapping("/posts/{postId}")
     public PostResponse get(@PathVariable Long postId) {
         // Request 클래스
@@ -67,5 +66,10 @@ public class PostController {
     @PatchMapping("/posts/{postId}")
     public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
         postService.edit(postId, request);
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public void delete(@PathVariable Long postId) {
+        postService.delete(postId);
     }
 }

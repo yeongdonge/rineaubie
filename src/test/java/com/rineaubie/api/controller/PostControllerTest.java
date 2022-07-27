@@ -234,4 +234,21 @@ class PostControllerTest {
                  */
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void test8() throws Exception {
+        //given
+        Post post = Post.builder()
+                .title("동영 제목")
+                .content("네카라쿠배")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        mockMvc.perform(delete("/posts/{postId}", post.getId())
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }
