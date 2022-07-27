@@ -1,13 +1,8 @@
 package com.rineaubie.api.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.Hibernate;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -28,5 +23,16 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public PostEditor.PostEditorBuilder toEditor() {
+        return PostEditor.builder()
+                .title(title)
+                .content(content);
+    }
+
+    public void edit(PostEditor postEditor) {
+        title = postEditor.getTitle();;
+        content = postEditor.getContent();
     }
 }

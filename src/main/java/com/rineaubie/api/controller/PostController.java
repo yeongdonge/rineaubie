@@ -1,6 +1,7 @@
 package com.rineaubie.api.controller;
 
 import com.rineaubie.api.request.PostCreate;
+import com.rineaubie.api.request.PostEdit;
 import com.rineaubie.api.request.PostSearch;
 import com.rineaubie.api.response.PostResponse;
 import com.rineaubie.api.service.PostService;
@@ -30,6 +31,9 @@ public class PostController {
     // react, next
         // -> javascript + <-> API (JSON)
 
+    // 글 등록, 글 단건 조회, 글 리스트 조회
+    // CRUD -> Create, Read, Update, Delete
+
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
         postService.write(request);
@@ -58,5 +62,10 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
         return postService.getList(postSearch);
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
+        postService.edit(postId, request);
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
+import com.rineaubie.api.request.PostEdit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +21,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -202,6 +202,32 @@ class PostControllerTest {
                 .andExpect(jsonPath("$[0].id").value(30))
                 .andExpect(jsonPath("$[0].title").value("동영 제목 - 30"))
                 .andExpect(jsonPath("$[0].content").value("네카라쿠배 - 30"))
+                .andExpect(status().isOk())
+                /**
+                 * [{id: ..., title: ...}, {id: ..., title: ...}]
+                 */
+                .andDo(print());
+    }
+    @Test
+    @DisplayName("글 제목 수정")
+    void test6() throws Exception {
+        //given
+        Post post = Post.builder()
+                .title("동영 제목")
+                .content("네카라쿠배")
+                .build();
+        postRepository.save(post);
+
+        // 수정할 내용
+        PostEdit postEdit = PostEdit.builder()
+                .title("승혜 제목")
+                .content("네카라쿠배")
+                .build();
+
+        // expected
+        mockMvc.perform(patch("/posts/{postId}", post.getId()) // PATCH / /posts/{postId}
+                .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postEdit)))
                 .andExpect(status().isOk())
                 /**
                  * [{id: ..., title: ...}, {id: ..., title: ...}]

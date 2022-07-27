@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Getter
 @NoArgsConstructor
-public class PostCreate {
+public class PostEdit {
 
     @NotBlank(message = "타이틀을 입력해주세요.")
     private String title;
@@ -19,7 +19,7 @@ public class PostCreate {
     private String content;
 
     @Builder
-    public PostCreate(String title, String content) {
+    public PostEdit(String title, String content) {
         this.title = title;
         this.content = content;
     }
