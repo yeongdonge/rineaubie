@@ -184,7 +184,7 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("글 여러개 조회")
+    @DisplayName("페이지를 0으로 요청하면 첫 페이지를 가져와야 함")
     void test5() throws Exception {
         // given
         List<Post> requestPosts = IntStream.range(1, 31)
@@ -196,9 +196,9 @@ class PostControllerTest {
         postRepository.saveAll(requestPosts);
 
         // expected
-        mockMvc.perform(get("/posts?page=1&sort=id,desc")
+        mockMvc.perform(get("/posts?page=0&size=10")
                 .contentType(APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()",is(5)))
+                .andExpect(jsonPath("$.length()",is(10)))
                 .andExpect(jsonPath("$[0].id").value(30))
                 .andExpect(jsonPath("$[0].title").value("동영 제목 - 30"))
                 .andExpect(jsonPath("$[0].content").value("네카라쿠배 - 30"))
@@ -208,6 +208,4 @@ class PostControllerTest {
                  */
                 .andDo(print());
     }
-
-
 }

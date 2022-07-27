@@ -3,6 +3,7 @@ package com.rineaubie.api.service;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
+import com.rineaubie.api.request.PostSearch;
 import com.rineaubie.api.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,7 +80,7 @@ class PostServiceTest {
     @DisplayName("글 1페이지 조회")
     void test3() {
         //given
-        List<Post> requestPosts = IntStream.range(1, 31)
+        List<Post> requestPosts = IntStream.range(0, 20)
                 .mapToObj(i -> Post.builder()
                         .title("동영 제목 - " + i)
                         .content("네카라쿠배 - " + i)
@@ -96,13 +94,16 @@ class PostServiceTest {
 
 
         // when
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id"));
-        List<PostResponse> posts = postService.getList(pageable);
+//        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id"));
+        PostSearch postSearch = PostSearch.builder()
+                .page(1)
+                .size(10)
+                .build();
+        List<PostResponse> posts = postService.getList(postSearch);
 
         // then
-        assertEquals(5L, posts.size());
-        assertEquals("동영 제목 - 30", posts.get(0).getTitle());
-        assertEquals("동영 제목 - 26", posts.get(4).getTitle());
+        assertEquals(10L, posts.size());
+        assertEquals("동영 제목 - 19", posts.get(0).getTitle());
     }
 
 

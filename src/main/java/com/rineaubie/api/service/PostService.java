@@ -3,10 +3,10 @@ package com.rineaubie.api.service;
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
+import com.rineaubie.api.request.PostSearch;
 import com.rineaubie.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,10 +50,10 @@ public class PostService {
     }
 
     // 글이 많은 경우 -> 비용이 많이 든다.
-    public List<PostResponse> getList(Pageable pageable) {
+    public List<PostResponse> getList(PostSearch postSearch) {
         // web -> page 1 -> 0
 //        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
-        return postRepository.findAll(pageable).stream()
+        return postRepository.getList(postSearch).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
     }
