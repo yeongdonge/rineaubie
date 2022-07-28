@@ -301,7 +301,5 @@ class PostControllerTest {
                 .andDo(print());
 
         // then
-
-
     }
 }

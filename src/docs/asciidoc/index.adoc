@@ -1,0 +1,19 @@
+= Rineaubie API
+:toc:
+
+== 글 단건조회
+=== CURL
+
+include::{snippets}/index/curl-request.adoc[]
+
+=== 요청
+
+include::{snippets}/index/http-request.adoc[]
+
+=== 응답
+
+include::{snippets}/index/http-response.adoc[]
+//include::{snippets}/index/httpie-request.adoc[]
+//include::{snippets}/index/request-body.adoc[]
+//include::{snippets}/index/response-body.adoc[]
+
