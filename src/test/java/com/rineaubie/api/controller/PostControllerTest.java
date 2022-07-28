@@ -5,10 +5,7 @@ import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.request.PostEdit;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +35,7 @@ class PostControllerTest {
     @Autowired
     private PostRepository postRepository;
 
-    @BeforeEach
+    @AfterEach
     void init() {
         postRepository.deleteAll();
     }
@@ -199,7 +196,7 @@ class PostControllerTest {
         mockMvc.perform(get("/posts?page=0&size=10")
                 .contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()",is(10)))
-                .andExpect(jsonPath("$[0].id").value(30))
+                .andExpect(jsonPath("$[0].id").value(33))
                 .andExpect(jsonPath("$[0].title").value("동영 제목 - 30"))
                 .andExpect(jsonPath("$[0].content").value("네카라쿠배 - 30"))
                 .andExpect(status().isOk())
