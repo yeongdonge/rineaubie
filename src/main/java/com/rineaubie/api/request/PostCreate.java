@@ -1,5 +1,6 @@
 package com.rineaubie.api.request;
 
+import com.rineaubie.api.exception.InvalidRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,11 @@ public class PostCreate {
     public PostCreate(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void validate() {
+        if (title.contains("바보")) {
+            throw new InvalidRequest("title","제목에 바보가 들어갈 수 없습니다.");
+        }
     }
 }

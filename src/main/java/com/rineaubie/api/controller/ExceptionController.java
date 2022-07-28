@@ -1,17 +1,16 @@
 package com.rineaubie.api.controller;
 
+import com.rineaubie.api.exception.RineauException;
 import com.rineaubie.api.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
@@ -40,5 +39,20 @@ public class ExceptionController {
             response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return response;
+    }
+
+    @ExceptionHandler(RineauException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> rineauExcpetion(RineauException e) {
+        int statusCode = e.getStatusCode();
+        ErrorResponse body = ErrorResponse.builder()
+                .code(String.valueOf(statusCode))
+                .message(e.getMessage())
+                .validation(e.getValidation())
+                .build();
+
+
+        return ResponseEntity.status(statusCode)
+                .body(body);
     }
 }
