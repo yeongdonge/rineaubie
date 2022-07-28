@@ -31,9 +31,12 @@ public class ExceptionController {
                 .code("400")
                 .message("잘못된 요청입니다.")
                 .build();
+//        response.addValidation(e);
         for (FieldError fieldError : e.getFieldErrors()) {
             response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
         }
+
+
         return response;
     }
 

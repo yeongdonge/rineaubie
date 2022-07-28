@@ -1,6 +1,7 @@
 package com.rineaubie.api.exception;
 
 import lombok.Getter;
+import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,5 +23,9 @@ public abstract class RineauException extends RuntimeException {
 
     public void addValidation(String fieldName, String message) {
         validation.put(fieldName, message);
+    }
+
+    public void addValidation(FieldError fieldError) {
+        validation.put(fieldError.getField(), fieldError.getDefaultMessage());
     }
 }

@@ -3,6 +3,8 @@ package com.rineaubie.api.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,20 +26,23 @@ public class ErrorResponse {
     private final String code;
     private final String message;
 
-    private final Map<String, String> validation = new HashMap<>();
+    private final Map<String, String> validation;
 
     @Builder
     public ErrorResponse(String code, String message, Map<String, String> validation) {
         this.code = code;
         this.message = message;
+        this.validation = validation != null ? validation : new HashMap<>();
     }
 
-    public ErrorResponse(String code, String message) {
-        this.code = code;
-        this.message = message;
+    public void addValidation(BindException e) {
+        for (FieldError fieldError : e.getFieldErrors()) {
+            validation.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+    }
+    public void addValidation(String fieldName, String errorMessage) {
+        this.validation.put(fieldName, errorMessage);
     }
 
-    public void addValidation(String field, String message) {
-        validation.put(field, message);
-    }
+
 }
