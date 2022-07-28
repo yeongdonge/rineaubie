@@ -2,6 +2,7 @@ package com.rineaubie.api.service;
 
 import com.rineaubie.api.domain.Post;
 import com.rineaubie.api.domain.PostEditor;
+import com.rineaubie.api.exception.PostNotFound;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.request.PostEdit;
@@ -43,7 +44,7 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         return PostResponse.builder()
                 .id(post.getId())
@@ -64,7 +65,7 @@ public class PostService {
     @Transactional
     public void edit(Long id, PostEdit postEdit) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
 
@@ -79,7 +80,7 @@ public class PostService {
 
     public void delete(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         // -> 존재하는 경우
         postRepository.delete(post);

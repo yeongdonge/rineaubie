@@ -1,6 +1,7 @@
 package com.rineaubie.api.service;
 
 import com.rineaubie.api.domain.Post;
+import com.rineaubie.api.exception.PostNotFound;
 import com.rineaubie.api.repository.PostRepository;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.request.PostEdit;
@@ -177,6 +178,63 @@ class PostServiceTest {
 
         //then
         Assertions.assertEquals(0,postRepository.count());
+    }
+
+    @Test
+    @DisplayName("글 1개 조회 - 실패")
+    void test7() {
+        //given
+        Post post = Post.builder()
+                .title("동영")
+                .content("네카라쿠배")
+                .build();
+
+        postRepository.save(post);
+
+        // post.getId() // primary_id = 1
+
+
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () -> {
+            postService.get(post.getId() + 1L);
+        });
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 - 실패")
+    void test8() {
+        //given
+        Post post = Post.builder()
+                .title("동영 제목")
+                .content("네카라쿠배")
+                .build();
+        postRepository.save(post);
+
+        //expected
+        Assertions.assertThrows(PostNotFound.class, () -> {
+            postService.delete(post.getId()+1L);
+        });
+    }
+    @Test
+    @DisplayName("글 내용 수정 - 실패")
+    void test9() {
+        //given
+        Post post = Post.builder()
+                .title("동영 제목")
+                .content("네카라쿠배")
+                .build();
+        postRepository.save(post);
+
+        // 수정할 내용
+        PostEdit postEdit = PostEdit.builder()
+                .title("동영 제목")
+                .content("쿠배당토")
+                .build();
+
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () -> {
+            postService.edit(post.getId() + 1L, postEdit);
+        });
     }
 
 
