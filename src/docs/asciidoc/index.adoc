@@ -1,25 +1,35 @@
 = Rineaubie API
-:toc:
+:doctype: book
+:toc: left
+:source-highlighter: highlightjs
+:toclevels: 2
+:sectlinks:
 
 == 글 단건조회
-=== CURL
-
-include::{snippets}/index/curl-request.adoc[]
 
 === 요청
 
-include::{snippets}/index/http-request.adoc[]
+include::{snippets}/post-inquiry/http-request.adoc[]
 
-include::{snippets}/index/path-parameters.adoc[]
+include::{snippets}/post-inquiry/path-parameters.adoc[]
 
-include::{snippets}/index/response-fields.adoc[]
 
 === 응답
 
-include::{snippets}/index/http-response.adoc[]
+include::{snippets}/post-inquiry/http-response.adoc[]
 
-include::{snippets}/index/response-fields.adoc[]
-//include::{snippets}/index/httpie-request.adoc[]
-//include::{snippets}/index/request-body.adoc[]
-//include::{snippets}/index/response-body.adoc[]
+include::{snippets}/post-inquiry/response-fields.adoc[]
+
+== 글 작성
+
+=== 요청
+
+include::{snippets}/post-create/http-request.adoc[]
+
+include::{snippets}/post-create/request-fields.adoc[]
+
+
+=== 응답
+
+include::{snippets}/post-create/http-response.adoc[]
 
