@@ -31,7 +31,7 @@ public class PostService {
                 .content(postCreate.getContent())
                 .build();
 
-        System.out.println("post = " + post);
+        System.out.println("post =!!main " + post);
 
         //case1. 저장한 데이터 Entity - response 응답하기
         //case2. 저장한 데이터 pk - response 응답하기
