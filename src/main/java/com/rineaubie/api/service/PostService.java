@@ -31,6 +31,8 @@ public class PostService {
                 .content(postCreate.getContent())
                 .build();
 
+        System.out.println("post = " + post);
+
         //case1. 저장한 데이터 Entity - response 응답하기
         //case2. 저장한 데이터 pk - response 응답하기
         //          Client에서는 수신한 id를 글 조회 API를 통해서 글 데이터를 수신받음
