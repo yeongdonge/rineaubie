@@ -17,7 +17,7 @@ const write = function () {
   })
   .then(() => {
     router.replace({ name: "home" })
-
+      }
   )
 }
 
