@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
+@ToString
 public class Post {
 
     @Id
