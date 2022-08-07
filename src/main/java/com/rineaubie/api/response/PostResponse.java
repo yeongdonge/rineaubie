@@ -25,7 +25,12 @@ public class PostResponse {
     @Builder
     public PostResponse(Long id, String title, String content) {
         this.id = id;
-        this.title = title.substring(0, Math.min(title.length(), 10));
+        this.title = lengthCheck(title);
         this.content = content;
+    }
+
+    private String lengthCheck(String title) {
+        if (title.length() > 10) return title.substring(0, 10) + "...";
+        else return title;
     }
 }
