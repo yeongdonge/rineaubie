@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from "axios";
-import {ref} from "vue";
+import { ref } from "vue";
 import Content from "@/components/Content.vue";
 
 const posts = ref([]);
@@ -15,9 +15,8 @@ axios.get("/api/posts?page=1&size=5").then((response) => {
   <ul>
     <li v-for="post in posts" :key="post.id">
       <div class="title">
-        <router-link :to="{ name: 'read', params: { postId: post.id } }">{{
-            post.title
-          }}
+        <router-link :to="{ name: 'read', params: { postId: post.id } }"
+          >{{ post.title }}
         </router-link>
       </div>
 
@@ -73,6 +72,4 @@ ul {
     }
   }
 }
-
-
 </style>

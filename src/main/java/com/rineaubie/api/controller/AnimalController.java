@@ -35,6 +35,7 @@ public class AnimalController {
         AnimalService service = animalType.create();
 
 //        AnimalService service = animalServiceFinder.findService(type);
+        assert service != null;
         return service.getSound();
     }
 

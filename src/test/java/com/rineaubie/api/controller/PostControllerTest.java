@@ -175,7 +175,7 @@ class PostControllerTest {
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(post.getId()))
-                .andExpect(jsonPath("$.title").value("1234567890"))
+                .andExpect(jsonPath("$.title").value("1234567890..."))
                 .andExpect(jsonPath("$.content").value("bar"))
                 .andDo(print());
     }
