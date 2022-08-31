@@ -23,6 +23,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional
     public void write(PostCreate postCreate) {
         // postCreate -> Entity
 
@@ -76,6 +77,7 @@ public class PostService {
         post.edit(postEditor);
     }
 
+    @Transactional
     public void delete(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
