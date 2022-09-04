@@ -8,7 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @ToString
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AlertModal from "../common/AlertModal.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -11,6 +12,7 @@ const props = defineProps({
     required: true,
   },
 });
+
 
 const post = ref({
   id: 0,
@@ -57,9 +59,19 @@ onMounted(() => {
       <div class="d-flex justify-content-end">
         <el-button type="warning" @click="moveToEdit()">수정</el-button>
         <el-button type="danger" @click="deletePost()">삭제</el-button>
+        <AlertModal v-if="showModal" @close="showModal = false">
+            <h3 slot="header">
+                경고!
+                <i class="fa-solid fa-xmark closeModalBtn" @click="showModal = false"></i>
+            </h3>
+            <div slot="body">
+                할 일을 입력해주세요.
+            </div>
+        </AlertModal>
       </div>
     </el-col>
   </el-row>
+
 </template>
 
 <style scoped lang="scss">
