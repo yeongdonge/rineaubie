@@ -133,3 +133,4 @@ fabric.properties
 
 # rineaubie
 nodeenv-16
+application-oauth.properties
