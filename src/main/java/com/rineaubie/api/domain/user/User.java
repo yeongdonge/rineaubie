@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "users")
 public class User extends BaseTimeEntity {
 
     @Id
@@ -32,7 +33,6 @@ public class User extends BaseTimeEntity {
     @Builder
     public User(String name, String email, String picture, Role role) {
         this.name = name;
-        this.id = id;
         this.email = email;
         this.picture = picture;
         this.role = role;

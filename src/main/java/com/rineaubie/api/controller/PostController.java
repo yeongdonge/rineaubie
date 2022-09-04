@@ -1,5 +1,6 @@
 package com.rineaubie.api.controller;
 
+import com.rineaubie.api.config.auth.dto.SessionUser;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.request.PostEdit;
 import com.rineaubie.api.request.PostSearch;
@@ -7,8 +8,10 @@ import com.rineaubie.api.response.PostResponse;
 import com.rineaubie.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final HttpSession httpSession;
 
     // Http Method
     // GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD, TRACE, CONNECT
@@ -33,6 +37,7 @@ public class PostController {
 
     // 글 등록, 글 단건 조회, 글 리스트 조회
     // CRUD -> Create, Read, Update, Delete
+
 
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
@@ -60,7 +65,11 @@ public class PostController {
     // /posts
 
     @GetMapping("/posts")
-    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch, Model model) {
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return postService.getList(postSearch);
     }
 

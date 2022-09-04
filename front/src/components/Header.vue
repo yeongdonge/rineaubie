@@ -7,6 +7,7 @@
           class="el-menu-demo"
           @select="handleSelect"
           router>
+        <el-menu-item index="/login">Login</el-menu-item>
         <el-menu-item index="/home">Home</el-menu-item>
         <el-menu-item index="/write">글 작성</el-menu-item>
       </el-menu>
