@@ -7,13 +7,15 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.rineaubie.api.config.auth.entity.Role;
+import com.rineaubie.api.config.auth.entity.UserPrincipal;
 
 
 /**
  * QUser is a Querydsl query type for User
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUser extends EntityPathBase<User> {
+public class QUser extends EntityPathBase<UserPrincipal> {
 
     private static final long serialVersionUID = 914254519L;
 
@@ -38,15 +40,15 @@ public class QUser extends EntityPathBase<User> {
     public final EnumPath<Role> role = createEnum("role", Role.class);
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable));
+        super(UserPrincipal.class, forVariable(variable));
     }
 
-    public QUser(Path<? extends User> path) {
+    public QUser(Path<? extends UserPrincipal> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+        super(UserPrincipal.class, metadata);
     }
 
 }

@@ -19,7 +19,6 @@ axios.get("/api/posts?page=1&size=5").then((response) => {
         <router-link :to="{ name: 'read', params: { postId: post.id } }"
           >{{ post.title }}
         </router-link>
-
       </div>
 
       <div class="content">
@@ -27,7 +26,7 @@ axios.get("/api/posts?page=1&size=5").then((response) => {
       </div>
       <div class="sub d-flex">
         <div class="category">개발</div>
-        <div class="regDate"> {{ post.parsedCreatedDate }}</div>
+        <div class="regDate">{{ post.parsedCreatedDate }}</div>
       </div>
     </li>
   </ul>

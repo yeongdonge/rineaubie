@@ -13,7 +13,6 @@ const props = defineProps({
   },
 });
 
-
 const post = ref({
   id: 0,
   title: "",
@@ -28,7 +27,7 @@ const deletePost = () => {
   axios.delete(`/api/posts/${props.postId}`).then(() => {
     router.replace({ name: "home" });
   });
-}
+};
 
 onMounted(() => {
   axios.get(`/api/posts/${props.postId}`).then((response) => {
@@ -60,18 +59,18 @@ onMounted(() => {
         <el-button type="warning" @click="moveToEdit()">수정</el-button>
         <el-button type="danger" @click="deletePost()">삭제</el-button>
         <AlertModal v-if="showModal" @close="showModal = false">
-            <h3 slot="header">
-                경고!
-                <i class="fa-solid fa-xmark closeModalBtn" @click="showModal = false"></i>
-            </h3>
-            <div slot="body">
-                할 일을 입력해주세요.
-            </div>
+          <h3 slot="header">
+            경고!
+            <i
+              class="fa-solid fa-xmark closeModalBtn"
+              @click="showModal = false"
+            ></i>
+          </h3>
+          <div slot="body">할 일을 입력해주세요.</div>
         </AlertModal>
       </div>
     </el-col>
   </el-row>
-
 </template>
 
 <style scoped lang="scss">

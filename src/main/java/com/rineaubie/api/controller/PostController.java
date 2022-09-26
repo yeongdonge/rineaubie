@@ -38,6 +38,24 @@ public class PostController {
     // 글 등록, 글 단건 조회, 글 리스트 조회
     // CRUD -> Create, Read, Update, Delete
 
+//    @GetMapping
+//    public String index(Model model) {
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//
+//    }
+
+    @GetMapping("/test")
+    public SessionUser index(Model model) {
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+            log.info("==============={}, {}", user.getName(), user.getEmail());
+
+        }
+
+        return user;
+    }
 
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
@@ -65,11 +83,7 @@ public class PostController {
     // /posts
 
     @GetMapping("/posts")
-    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch, Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("userName", user.getName());
-        }
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
         return postService.getList(postSearch);
     }
 
