@@ -1,4 +1,4 @@
-package com.rineaubie.api.config.auth;
+package com.rineaubie.api.config.oauth;
 
 import com.rineaubie.api.config.properties.CorsProperties;
 import lombok.RequiredArgsConstructor;

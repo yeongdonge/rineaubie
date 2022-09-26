@@ -1,8 +1,8 @@
 package com.rineaubie.api.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rineaubie.api.config.auth.entity.ProviderType;
-import com.rineaubie.api.config.auth.entity.Role;
+import com.rineaubie.api.config.oauth.entity.ProviderType;
+import com.rineaubie.api.config.oauth.entity.Role;
 import com.rineaubie.api.domain.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

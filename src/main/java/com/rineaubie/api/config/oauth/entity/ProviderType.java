@@ -1,4 +1,4 @@
-package com.rineaubie.api.config.auth.entity;
+package com.rineaubie.api.config.oauth.entity;
 
 public enum ProviderType {
     GOOGLE,

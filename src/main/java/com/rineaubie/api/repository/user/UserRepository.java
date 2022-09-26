@@ -1,4 +1,4 @@
-package com.rineaubie.api.repository;
+package com.rineaubie.api.repository.user;
 
 import com.rineaubie.api.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

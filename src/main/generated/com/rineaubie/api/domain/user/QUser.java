@@ -7,8 +7,8 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.rineaubie.api.config.auth.entity.Role;
-import com.rineaubie.api.config.auth.entity.UserPrincipal;
+import com.rineaubie.api.config.oauth.entity.Role;
+import com.rineaubie.api.config.oauth.entity.UserPrincipal;
 
 
 /**

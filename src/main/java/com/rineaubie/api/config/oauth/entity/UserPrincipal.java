@@ -1,4 +1,4 @@
-package com.rineaubie.api.config.auth.entity;
+package com.rineaubie.api.config.oauth.entity;
 
 import com.rineaubie.api.domain.BaseTimeEntity;
 import com.rineaubie.api.domain.user.User;

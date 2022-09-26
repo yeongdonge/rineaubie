@@ -1,6 +1,5 @@
 package com.rineaubie.api.controller;
 
-import com.rineaubie.api.config.auth.dto.SessionUser;
 import com.rineaubie.api.request.PostCreate;
 import com.rineaubie.api.request.PostEdit;
 import com.rineaubie.api.request.PostSearch;
@@ -8,7 +7,6 @@ import com.rineaubie.api.response.PostResponse;
 import com.rineaubie.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -44,18 +42,6 @@ public class PostController {
 //
 //    }
 
-    @GetMapping("/test")
-    public SessionUser index(Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
-        if (user != null) {
-            model.addAttribute("userName", user.getName());
-            log.info("==============={}, {}", user.getName(), user.getEmail());
-
-        }
-
-        return user;
-    }
 
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {

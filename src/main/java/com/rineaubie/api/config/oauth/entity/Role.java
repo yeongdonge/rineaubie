@@ -1,4 +1,4 @@
-package com.rineaubie.api.config.auth.entity;
+package com.rineaubie.api.config.oauth.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,9 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum Role {
 
-    GUEST("ROLE_GUEST", "손님"),
-    USER("ROLE_USER", "일반 사용자");
+    ADMIN("ROLE_ADMIN", "관리자"),
+    USER("ROLE_USER", "일반 사용자"),
+    GUEST("GUEST", "게스트");
 
     private final String key;
     private final String title;
