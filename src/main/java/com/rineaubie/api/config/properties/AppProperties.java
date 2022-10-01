@@ -28,7 +28,7 @@ public class AppProperties {
 
         private List<String> authorizedRedirectUris = new ArrayList<>();
 
-        public List<String> getAuthorizedRedirectUrils() {
+        public List<String> getAuthorizedRedirectUtils() {
             return authorizedRedirectUris;
         }
 
