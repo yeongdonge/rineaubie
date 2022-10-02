@@ -9,6 +9,7 @@ import com.rineaubie.api.oauth.info.Oauth2UserInfo;
 import com.rineaubie.api.oauth.info.Oauth2UserInfoFactory;
 import com.rineaubie.api.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -22,6 +23,7 @@ import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
@@ -31,6 +33,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User user = super.loadUser(userRequest);
 
         try {
+            log.info("process=========================");
             return this.process(userRequest, user);
         } catch (AuthenticationException e) {
             throw e;

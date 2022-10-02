@@ -1,5 +1,6 @@
 package com.rineaubie.api.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.SerializationUtils;
 
 import javax.servlet.http.Cookie;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.Optional;
 
+@Slf4j
 public class CookieUtil {
 
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
@@ -54,6 +56,10 @@ public class CookieUtil {
     }
 
     public static <T> T deserialize(Cookie cookie, Class<T> cls) {
+        log.info("value = {}", cookie.getValue());
+        log.info("value = {}", cookie.getName());
+        log.info("value = {}", cookie.getDomain());
+        log.info("value = {}", cookie.getPath());
         return cls.cast(
                 SerializationUtils.deserialize(
                         Base64.getDecoder().decode(cookie.getValue())

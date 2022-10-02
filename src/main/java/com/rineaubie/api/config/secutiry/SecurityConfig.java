@@ -8,7 +8,7 @@ import com.rineaubie.api.oauth.filter.TokenAuthenticationFilter;
 import com.rineaubie.api.oauth.handler.Oauth2AuthenticationFailureHandler;
 import com.rineaubie.api.oauth.handler.Oauth2AuthenticationSuccessHandler;
 import com.rineaubie.api.oauth.handler.TokenAccessDeniedHandler;
-import com.rineaubie.api.oauth.repository.Oauth2AuthorizationBasedOnCookieRepository;
+import com.rineaubie.api.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.rineaubie.api.oauth.service.CustomOAuth2UserService;
 import com.rineaubie.api.oauth.service.CustomUserDetailService;
 import com.rineaubie.api.oauth.token.AuthTokenProvider;
@@ -20,7 +20,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,7 +31,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
-@EnableWebSecurity
+//@EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -121,8 +120,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     인가의 Request를 처리하고 검증할 때 사용
      */
     @Bean
-    public Oauth2AuthorizationBasedOnCookieRepository oauth2AuthorizationBasedOnCookieRepository() {
-        return new Oauth2AuthorizationBasedOnCookieRepository();
+    public OAuth2AuthorizationRequestBasedOnCookieRepository oauth2AuthorizationBasedOnCookieRepository() {
+        return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
     /*

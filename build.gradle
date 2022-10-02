@@ -13,6 +13,8 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    all*.exclude group: 'org.springframework.boot', module: 'logback-classic'
     asciidoctorExt
 }
 
@@ -32,6 +34,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'
 
+    implementation 'mysql:mysql-connector-java'
+
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${asciidocVersion}"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${asciidocVersion}"
 
@@ -42,7 +46,9 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 권한 관련
-    implementation 'org.springframework.session:spring-session-jdbc' // 권한 관련
+//    implementation 'org.springframework.session:spring-session-jdbc' // 권한 관련
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
 
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'

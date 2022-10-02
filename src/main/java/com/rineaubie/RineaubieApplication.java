@@ -1,5 +1,6 @@
 package com.rineaubie;
 
+import com.rineaubie.api.config.properties.AppProperties;
 import com.rineaubie.api.config.properties.CorsProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableConfigurationProperties({
+        AppProperties.class,
         CorsProperties.class,
 
 })

@@ -1,7 +1,7 @@
 package com.rineaubie.api.oauth.handler;
 
 import com.rineaubie.api.utils.CookieUtil;
-import com.rineaubie.api.oauth.repository.Oauth2AuthorizationBasedOnCookieRepository;
+import com.rineaubie.api.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -19,11 +19,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class Oauth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private final Oauth2AuthorizationBasedOnCookieRepository authorizationRepository;
+    private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRepository;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String targetUri = CookieUtil.getCookie(request, Oauth2AuthorizationBasedOnCookieRepository.OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME)
+        String targetUri = CookieUtil.getCookie(request, OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue)
                 .orElse("/");
 

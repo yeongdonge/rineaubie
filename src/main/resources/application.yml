@@ -1,0 +1,44 @@
+spring:
+  config:
+    import: application-oauth.yml, application-mysql.yml
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: 'true'
+        default-page-size: '5'
+  application:
+    name: app
+  main:
+    allow-bean-definition-overriding: true
+
+  # JPA 설정
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl.import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        default_batch_fetch_size: ${chunkSize:100}
+        jdbc.batch_size: 20
+        order_inserts: true
+        order_updates: true
+        format_sql: true
+
+cors:
+  allowed-headers: '*'
+  max-age: '3600'
+  allowed-origins: http://localhost:3000
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+app:
+  oauth2:
+    authorizedRedirectUris: http://localhost:3000/oauth/redirect
+  auth:
+    refreshTokenExpiry: 60480000
+    tokenExpiry: 1800000
+    tokenSecret: A3BFE8D8C5A41AE17ECA6FF337426
+jwt:
+  secret: 'a8c2d7e917837b7ee618abba4eea7f3a0a48e899df3b14ee459cbd0bf340e65de1603920835fd5dffd2c38a5e6b6f40285639c6cec57221bd6f8923462b07cce2a1236ad155f7863644cbdb2476ed88a90136cd7269711032c2dce38da489611'

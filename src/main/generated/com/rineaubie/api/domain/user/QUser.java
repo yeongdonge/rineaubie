@@ -7,15 +7,13 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.rineaubie.api.oauth.entity.Role;
-import com.rineaubie.api.oauth.entity.UserPrincipal;
 
 
 /**
  * QUser is a Querydsl query type for User
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUser extends EntityPathBase<UserPrincipal> {
+public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = 914254519L;
 
@@ -28,27 +26,35 @@ public class QUser extends EntityPathBase<UserPrincipal> {
 
     public final StringPath email = createString("email");
 
+    public final StringPath emailVerified = createString("emailVerified");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
 
-    public final StringPath name = createString("name");
+    public final StringPath password = createString("password");
 
-    public final StringPath picture = createString("picture");
+    public final StringPath profileImageUrl = createString("profileImageUrl");
 
-    public final EnumPath<Role> role = createEnum("role", Role.class);
+    public final EnumPath<com.rineaubie.api.oauth.entity.ProviderType> providerType = createEnum("providerType", com.rineaubie.api.oauth.entity.ProviderType.class);
+
+    public final EnumPath<com.rineaubie.api.oauth.entity.Role> role = createEnum("role", com.rineaubie.api.oauth.entity.Role.class);
+
+    public final StringPath userId = createString("userId");
+
+    public final StringPath username = createString("username");
 
     public QUser(String variable) {
-        super(UserPrincipal.class, forVariable(variable));
+        super(User.class, forVariable(variable));
     }
 
-    public QUser(Path<? extends UserPrincipal> path) {
+    public QUser(Path<? extends User> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QUser(PathMetadata metadata) {
-        super(UserPrincipal.class, metadata);
+        super(User.class, metadata);
     }
 
 }

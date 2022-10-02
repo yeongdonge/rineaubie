@@ -4,7 +4,7 @@ import com.rineaubie.api.oauth.entity.ProviderType;
 import com.rineaubie.api.oauth.entity.Role;
 import com.rineaubie.api.oauth.info.Oauth2UserInfo;
 import com.rineaubie.api.oauth.info.Oauth2UserInfoFactory;
-import com.rineaubie.api.oauth.repository.Oauth2AuthorizationBasedOnCookieRepository;
+import com.rineaubie.api.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.rineaubie.api.oauth.token.AuthToken;
 import com.rineaubie.api.oauth.token.AuthTokenProvider;
 import com.rineaubie.api.utils.CookieUtil;
@@ -38,7 +38,7 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final AuthTokenProvider tokenProvider;
     private final AppProperties appProperties;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
-    private final Oauth2AuthorizationBasedOnCookieRepository authorizationRepository;
+    private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -50,13 +50,13 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             return;
         }
 
-        clearAuthenticationAttributes(request);
+        clearAuthenticationAttributes(request, response);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Optional<String> redirectUri = CookieUtil.getCookie(request, Oauth2AuthorizationBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
+        Optional<String> redirectUri = CookieUtil.getCookie(request, OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
@@ -101,8 +101,8 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         int cookieMaxAge = (int) refreshTokenExpiry / 60;
 
-        CookieUtil.deleteCookie(request, response, Oauth2AuthorizationBasedOnCookieRepository.REFRESH_TOKEN);
-        CookieUtil.addCooke(response, Oauth2AuthorizationBasedOnCookieRepository.REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
+        CookieUtil.deleteCookie(request, response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN);
+        CookieUtil.addCooke(response, OAuth2AuthorizationRequestBasedOnCookieRepository.REFRESH_TOKEN, refreshToken.getToken(), cookieMaxAge);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", accessToken.getToken())
